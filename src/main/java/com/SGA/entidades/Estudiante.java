@@ -1,11 +1,14 @@
-
 package com.SGA.entidades;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import io.swagger.models.auth.In;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,61 +22,50 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "estudiante")
-public class Estudiante implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    private Long numeroDocumento;
-    
-   
-    
+public class Estudiante implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idEstudainte;
+
+
+	@Column(name="numero_documento", unique = true)
+	private String  numeroDocumento;
+
     @Column(name = "ano_inf")
-    private String anoInf;
-    
-    
+    private int anoInf;
+
     @Column(name = "mun_codigo")
-    private String munCodigo;
+    private int munCodigo;
+   
     
     @Column(name = "municipio")
     private String municipio;
     
     @Column(name = "codigo_dane")
-    private String codigoDane;
+    private int codigoDane;
     
     @Column(name = "cons_sede")
-    private String consSede;
+    private int consSede;
     
     @Column(name = "res_depto")
-    private String resDepto;
+    private int resDepto;
     
     @Column(name = "res_mun")
-    private String resMun;
+    private int resMun;
     
     @Column(name = "estrato")
-    private String estrato;
+    private int estrato;
     
-    @Column(name = "sisben_IV",length = 10)
-    private String sisben;
-    
-    @Column(name = "pob_vict_conf")
-    private String pobVictConf;
     
     @Column(name = "res")
-    private String res;
-    
-    @Column(name = "caracter")
-    private String caracter;
-    
-    @Column(name = "especialidad",length = 50)
-    private String especialidad;
+    private int res;
     
     @Column(name = "grupo")
-    private String grupo;
+    private int grupo;
     
-    @Column(name = "codigo_internado")
-    private String codigoInternado;
-    
-
     @Column(name = "estNombre1")
     private String nombre1;
 
@@ -88,44 +80,63 @@ public class Estudiante implements Serializable {
 
     @Column(name = "estDireccionRecidencia")
     private String direccionRecidencia;
+    
+    @Column(name = "sisben_IV",length = 100)
+    private String sisben;
 
-    @Column(name = "estTelefono")
+    @Column(name = "estTelefono",length = 100)
     private String telefono;
 
-
     @Column(name = "estFechaNacimiento")
-    private String fechaNacimiento;
-
-
+    private Date fechaNacimiento;
 
     @Column(name = "estGenero")
     private String genero;
-
-
-    @Column(name = "fechaCreacio")
-    @NotNull
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date fechaCreacion;
+    
+    @Column(name = "institucion")
+    private String institucion;
+    
+    @Column(name = "sede")
+    private String sede;
+    
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_especialidad", nullable = true)
+	private Especialidad  idEspecialidad;
     
     
-    @Column(name = "id_institucion")
-    private String idInstitucion;
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_caracter", nullable = true)
+	private Caracter  idCaracter;
     
-    @Column(name = "id_tipo_documento")
-    private String idTipoDocumento;
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_internado", nullable = true)
+	private Internado  idInternado;
     
-    @Column(name = "id_discapcidad")
-    private String idDiscapacidad;
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_grado", nullable = true)
+	private Grado  idGrado;
     
-    @Column(name = "id_etnia")
-    private String idEtnia;
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_tipo_documento", nullable = true)
+	private TipoDocumento  idTipoDocumento;
     
-    @Column(name = "id_jornada")
-    private String idJornada;
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_discapacidad", nullable = true)
+	private TipoDiscapacidad  idDiscapacidad;
     
-    @Column(name = "estGrado")
-    private String grado;
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_etnia", nullable = true)
+	private Etnia  idEtnia;
+    
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_jornada", nullable = true)
+	private Jornada  idJornada;
+    
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "id_pob_vic_conf", nullable = true)
+	private PobVicConf  idPobVicConf;
+    
+    
     
    
 }

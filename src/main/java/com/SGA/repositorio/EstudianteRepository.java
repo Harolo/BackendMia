@@ -15,11 +15,12 @@ import com.SGA.entidades.Estudiante;
 @Repository
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 	
-	Boolean existsByNumeroDocumento(long numeroDocumento);
+	Boolean existsByNumeroDocumento(String numeroDocumento);
 	
 	List<Estudiante> findAll();
 	
-	Estudiante findByNumeroDocumento(long numeroDocumento);
+	Estudiante findByNumeroDocumento(String numeroDocumento);
+	
 
 	@Query(value = "select * from estudiante where id_sede = :id_sede and est_genero = :est_genero ", nativeQuery = true)
 	List<Estudiante> listEstudianteGenero(@Param("est_genero") String est_genero, @Param("id_sede") Long id_sede);
